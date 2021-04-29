@@ -65,7 +65,7 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         String token = (String) auth.getCredentials();
-        //解密获得username，用于和数据库里的进行对比
+        //从加密后的token中解密获得username，用于和数据库里的进行对比
         String username= JWTUtil.getUsername(token);
         if (username == null){
             throw new AuthenticationException("token invalid");
