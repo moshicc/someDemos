@@ -16,12 +16,12 @@ import java.util.concurrent.TimeoutException;
 
 public class rabbitMGconsumer {
 
-    private static String host = "47.93.228.227";
+    private static String host = "139.196.110.114";
     private static String userName = "guest";
     private static String passWord = "guest";
     //用docker部署的rabbitMQ 内部的5672映射到linux服务器上的8084
     // （为啥不映射到linux上的5672端口？狗日的，阿里云安全组配置的5672总是不生效！）
-    private static int port = 8085;
+    private static int port = 8090;
 
     public static void main(String[] args) {
         ConnectionFactory factory = new ConnectionFactory();
@@ -37,12 +37,12 @@ public class rabbitMGconsumer {
             channel = connect.createChannel();
 
             String queueName = "queue5";
-            channel.queueDeclare(queueName,false,false,false,null);
+            channel.queueDeclare(queueName, false, false, false, null);
             QueueingConsumer consumer = new QueueingConsumer(channel);
             channel.basicConsume(queueName, true, consumer);
             while (true) {
                 QueueingConsumer.Delivery deliver = consumer.nextDelivery();
-                System.out.println("reciver messager:"+new String(deliver.getBody()));
+                System.out.println("reciver messager:" + new String(deliver.getBody()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,7 +50,7 @@ public class rabbitMGconsumer {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //关闭连接
             rabbitMQproducer.closeConnect(channel, connect);
         }
