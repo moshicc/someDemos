@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+
+spring:
+  application:
+    name: rabbitmq-producer  #给这个项目起名字，一般用不到，但在微服务里常用
+
+  rabbitmq:
+    host: 139.196.110.114
+    port: 8090 #本来是5672，但还是阿里云服务器防火墙问题，就映射到8090上了
+    username: guest
+    password: guest
+    #消息确认配置项
+    publisher-confirms: true #确认消息已经发送到交换机（Exchange）
+    publisher-returns: true #确认消息已经发送到队列（Queue）
